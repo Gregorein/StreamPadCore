@@ -1,0 +1,12 @@
+.mdx-content {
+  background-color: #1e1e1e;
+  color: #ffffff;
+}
+
+.mdx-content a {
+  color: #82b1ff;
+}
+
+.mdx-content h1, .mdx-content h2, .mdx-content h3, .mdx-content h4 {
+  color: #ffffff;
+}
