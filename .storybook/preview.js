@@ -1,7 +1,5 @@
 /** @type { import('@storybook/react').Preview } */
 
-import './mdx-theme.css';
-
 const preview = {
   parameters: {
     controls: {

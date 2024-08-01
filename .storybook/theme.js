@@ -18,8 +18,8 @@ export default create({
 	// colorSecondary: '#585C6D',
 	
 	// // Text colors
-	// textColor: '#10162F',
-	// textInverseColor: '#ffffff',
+	// textColor: '#ffffff',
+	// textInverseColor: '#10162F',
 
 	// UI
 	appBg: '#000000',
