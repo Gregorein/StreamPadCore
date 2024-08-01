@@ -1,3 +1,5 @@
+![StreamPadCore Logo](public/logo.png)
+
 # StreamPadCore
 
 StreamPadCore is a shared UI and utility library for the StreamPad project, providing reusable components and tools across the StreamPad desktop application, web UI customization tool, and companion app.
