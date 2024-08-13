@@ -1,12 +1,16 @@
 import { ReactNode, MouseEvent } from "react"
 import type { ComponentExports } from "types/Component"
 
-const Component: ReactNode = <button>Click Me</button>
+export type ButtonProps = {
+	onClick: (event: MouseEvent) => void
+}
 
-const Template: ReactNode = <div>Button (Template)</div>
+const Button = ({ onClick }: ButtonProps): ReactNode => <button onClick={onClick}>Click Me</button>
+
+const Template = (): ReactNode => <div>Button (Template)</div>
 
 export default {
-	Component: Component,
+	Component: Button,
 	Template: Template,
 	description: "A simple button component",
 	version: "1.0.0",

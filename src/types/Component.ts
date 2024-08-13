@@ -1,8 +1,10 @@
 import { ReactNode } from 'react'
 
+type Props = any // eslint-disable-line @typescript-eslint/no-explicit-any
+
 export interface ComponentExports {
-	Component: ReactNode
-	Template: ReactNode
+	Component: (props: Props) => ReactNode
+	Template: (props: Props) => ReactNode
 	description: string
 	version: string
 	author: string
