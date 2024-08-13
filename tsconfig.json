@@ -1,0 +1,27 @@
+{
+  "compilerOptions": {
+    "target": "esnext",
+    "module": "esnext",
+    "moduleResolution": "node",
+    "strict": true,
+    "sourceMap": false,
+    "esModuleInterop": true,
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "forceConsistentCasingInFileNames": true,
+    "skipLibCheck": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noImplicitAny": false,
+    "noImplicitReturns": true,
+    "composite": true,
+    "jsx": "react-jsx",
+    "baseUrl": "./src",
+    "paths": {    
+      "components/*": ["components/*"],
+			"utils/*": ["utils/*"],
+			"types/*": ["types/*"]
+    }
+  },
+  "include": ["src"]
+}

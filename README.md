@@ -9,6 +9,14 @@ StreamPadCore is a shared UI and utility library for the StreamPad project, prov
 
 This library includes a list of components shipped by default with the StreamPad app.
 
+Each component is structured to include the following:
+
+- **Component**: The main React component.
+- **TemplateComponent**: A simplified or static representation of the component used in the StreamPad EditorUI.
+- **API**: Descriptions of the component's available methods and events.
+- **Metadata**: Information such as version, author, license, and dependencies.
+- **Initialization**: An optional `initialize` function for setup tasks when the component is loaded.
+
 ## Getting Started
 
 To get started with StreamPad, clone the repository and follow the instructions below:
@@ -17,22 +25,10 @@ To get started with StreamPad, clone the repository and follow the instructions 
 yarn add git@github.com:Gregorein/StreamPadCore.git
 ```
 
-or with npm:
-
-```bash
-npm install git@github.com:Gregorein/StreamPadCore.git
-```
-
 then run storybook:
 
 ```bash
 yarn storybook
-```
-
-or with npm
-
-```bash
-npm run storybook
 ```
 
 ## Roadmap and Development Phases
