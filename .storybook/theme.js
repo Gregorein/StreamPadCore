@@ -10,7 +10,7 @@ export default create({
 	// branding
   brandTitle: 'StreampadCore',
   brandUrl: 'https://streampad.website',
-  brandImage: './StreamPadCore/logo.png',
+  brandImage: 'https://raw.githubusercontent.com/Gregorein/StreamPadCore/master/public/logo.png',
   brandTarget: '_self',
 
 	// // theme
