@@ -1,63 +1,39 @@
-import typescriptEslintParser from "@typescript-eslint/parser"
-import typescriptEslint from "@typescript-eslint/eslint-plugin"
-import react from "eslint-plugin-react"
+import js from "@eslint/js"
+import globals from "globals"
 import reactHooks from "eslint-plugin-react-hooks"
+import reactRefresh from "eslint-plugin-react-refresh"
+import tseslint from "typescript-eslint"
 
 import enforceComponentStructure from "./.eslint/enforce-component-structure.js"
 
-export default [
-  {
-    ignores: ["*.mdx"],
+export default tseslint.config({
+  extends: [js.configs.recommended, ...tseslint.configs.recommended],
+  files: ["**/*.{ts,tsx}"],
+  ignores: [
+    "dist",
+    "releases",
+    "storybook-static",
+  ],
+  languageOptions: {
+    ecmaVersion: 2020,
+    globals: globals.browser,
   },
-  {
-    languageOptions: {
-      ecmaVersion: "latest",
-      sourceType: "module",
-    },
-    linterOptions: {
-      reportUnusedDisableDirectives: true,
-    },
-    rules: {
-      "no-unused-vars": "off",
-    },
-  },
-  {
-    files: ["**/*.{ts,tsx}"],
-    languageOptions: {
-      parser: typescriptEslintParser,
-    },
-    plugins: {
-      "@typescript-eslint": typescriptEslint,
-      react,
-    },
-    rules: {
-      "@typescript-eslint/explicit-function-return-type": "warn",
-      "@typescript-eslint/no-unused-vars": "warn",
-      "no-unused-vars": "off",
-      "@typescript-eslint/explicit-module-boundary-types": "off",
-      "@typescript-eslint/no-explicit-any": "warn",
-    },
-  },
-  {
-    files: ["**/*.{jsx,tsx}"],
-    settings: {
-      react: {
-        version: "detect",
+  plugins: {
+    "react-hooks": reactHooks,
+    "react-refresh": reactRefresh,
+    "streamPad-core": {
+      rules: {
+        "enforce-component-structure": enforceComponentStructure,
       },
-    },
-    plugins: {
-      react,
-      "react-hooks": reactHooks,
-      "streamPad-core": {
-        rules: {
-          "enforce-component-structure": enforceComponentStructure,
-        },
-      },
-    },
-    rules: {
-      "react/prop-types": "off",
+    },    
+  },
+  rules: {
+    ...reactHooks.configs.recommended.rules,
+    "react-refresh/only-export-components": [
+      "warn",
+      { allowConstantExport: true },
+    ],
 
-      "streamPad-core/enforce-component-structure": "error",
-    },
+    "streamPad-core/enforce-component-structure": "error",
   },
-]
+})
