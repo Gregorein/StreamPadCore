@@ -4,7 +4,7 @@ import reactHooks from "eslint-plugin-react-hooks"
 import reactRefresh from "eslint-plugin-react-refresh"
 import tseslint from "typescript-eslint"
 
-import enforceComponentStructure from "./.eslint/enforce-component-structure.js"
+import enforceComponentSchema from "./.eslint/rules/enforce-control-schema.js"
 
 export default tseslint.config({
   extends: [js.configs.recommended, ...tseslint.configs.recommended],
@@ -21,9 +21,9 @@ export default tseslint.config({
   plugins: {
     "react-hooks": reactHooks,
     "react-refresh": reactRefresh,
-    "streamPad-core": {
+    "streamPad": {
       rules: {
-        "enforce-component-structure": enforceComponentStructure,
+        "enforce-control-schema": enforceComponentSchema,
       },
     },    
   },
@@ -34,6 +34,6 @@ export default tseslint.config({
       { allowConstantExport: true },
     ],
 
-    "streamPad-core/enforce-component-structure": "error",
+    "streamPad/enforce-control-schema": "error",
   },
 })

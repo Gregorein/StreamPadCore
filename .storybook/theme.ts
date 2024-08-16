@@ -4,8 +4,8 @@ export default create({
 	base: 'dark',
 
 	// typography
-	fontBase: '"Noto Sans", sans-serif',
-	fontCode: 'monospace',
+	fontBase: '"Roboto", sans-serif',
+	fontCode: '"Fira Code Variable", monospace',
 
 	// branding
 	brandTitle: 'StreampadCore',
@@ -13,30 +13,30 @@ export default create({
 	brandImage: 'https://raw.githubusercontent.com/Gregorein/StreamPadCore/master/public/logo.png',
 	brandTarget: '_self',
 
-	// // theme
-	// colorPrimary: '#3A10E5',
-	// colorSecondary: '#585C6D',
+	// theme
+	colorPrimary: '#0b6bcb',
+	colorSecondary: '#0b6bcb',
 
-	// // Text colors
-	// textColor: '#ffffff',
-	// textInverseColor: '#10162F',
+	// Text colors
+	textColor: '#f0f4f8',
+	textInverseColor: '#0b6bcb',
 
 	// UI
-	appBg: '#000000',
-	appContentBg: '#111111',
-	appPreviewBg: '#222222',
-	// appBorderColor: '#585C6D',
-	appBorderRadius: 16,
+	appBg: '#0b0d0e',
+	appContentBg: '#0b0d0e',
+	appPreviewBg: '#181a1c',
+	appBorderColor: '#32383e',
+	appBorderRadius: 6,
 
-	// // Toolbar default and active colors
-	// barTextColor: '#9E9E9E',
-	// barSelectedColor: '#585C6D',
-	// barHoverColor: '#585C6D',
-	// barBg: '#ffffff',
+	// Toolbar default and active colors
+	barTextColor: '#97c3f0',
+	barSelectedColor: '#12467b',
+	barHoverColor: '#0a2744',
+	barBg: '#0b0d0e',
 
-	// // Form colors
-	// inputBg: '#ffffff',
-	// inputBorder: '#10162F',
-	// inputTextColor: '#10162F',
-	// inputBorderRadius: 2,
+	// Form colors
+	inputBg: '#0b0d0e',
+	inputBorder: '#12467b',
+	inputTextColor: '#c7dff7',
+	inputBorderRadius: 6,
 })
