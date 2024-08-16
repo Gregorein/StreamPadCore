@@ -15,7 +15,8 @@ export default {
     "<rootDir>/dist/",
     "<rootDir>/node_modules/",
     "<rootDir>/storybook-static/",
-    "<rootDir>/releases/"
+    "<rootDir>/releases/",
+    "<rootDir>/scripts/"
   ],
   setupFilesAfterEnv: ["<rootDir>/scripts/setupTests.ts"]
 }

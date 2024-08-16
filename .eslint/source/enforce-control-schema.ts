@@ -1,4 +1,4 @@
-import { createSourceFile, ScriptTarget, isExportAssignment, isTypeAliasDeclaration, Node, forEachChild, isTypeReferenceNode, isObjectLiteralExpression, TypeLiteralNode, isInterfaceDeclaration, TypeNode, PropertySignature, TypeElement, Identifier, isPropertySignature, isIdentifier, ObjectLiteralElementLike, isPropertyAssignment, createProgram } from "typescript"
+import { createSourceFile, ScriptTarget, isExportAssignment, isTypeAliasDeclaration, Node, forEachChild, isObjectLiteralExpression, TypeLiteralNode, isInterfaceDeclaration, TypeNode, TypeElement, isPropertySignature, isIdentifier, ObjectLiteralElementLike, isPropertyAssignment, createProgram, ObjectLiteralExpression } from "typescript"
 import { readFileSync, existsSync, readdirSync, statSync } from "fs"
 import { resolve, basename, join } from "path"
 import { Rule } from "eslint"
@@ -153,7 +153,7 @@ export default {
 			)
 
 			let hasDefaultExport = false
-			let exportedMeta: any = null
+			let exportedMeta: ObjectLiteralExpression
 
 			const visit = (node: Node) => {
 				// Parse the meta file and check for default export
