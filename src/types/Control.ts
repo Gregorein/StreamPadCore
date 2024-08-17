@@ -1,4 +1,4 @@
-
+type ValueType = "string" | "number" | "object" | "boolean"
 type Value = string | number | object | boolean
 
 type Category = "buttons" | "knobs" | "toggles" | "indicators" | "sliders"
@@ -20,26 +20,28 @@ type Tag =
 interface APIFunctionArg {
 	name: string
 	description: string
-	value: Value
+	type: ValueType
+	defaultValue: Value
 	required: boolean
 }
 
 export interface APIEntry {
-	type: "function" | "value"
+	apiType: "function" | "value"
 	name: string
 	description: string
 	required: boolean
 }
 
 export interface APIFunction extends APIEntry {
-	type: "function"
+	apiType: "function"
 	args?: APIFunctionArg[]
-	return: Value | "void"
+	returnType: ValueType | "void"
 }
 
 export interface APIValue extends APIEntry {
-	type: "value"
-	value: Value
+	apiType: "value"
+	type: ValueType
+	defaultValue: Value
 }
 
 export interface Meta {

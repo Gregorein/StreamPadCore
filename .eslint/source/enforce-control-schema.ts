@@ -35,7 +35,7 @@ export default {
 				}
 			})
 
-			const storiesFile = `${controlName}.stories.ts`
+			const storiesFile = `${controlName}.stories.tsx`
 			const storiesFilePath = resolve(`${controlPath}/${storiesFile}`)
 			if (!existsSync(storiesFilePath)) {
 				context.report({

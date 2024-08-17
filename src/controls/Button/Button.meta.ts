@@ -8,11 +8,11 @@ const meta: Meta = {
 	license: "MIT",
 	api: [
 		{
-			type: "function",
+			apiType: "function",
 			name: "onClick",
 			required: true,
 			description: "Handles button click",
-			return: "void",
+			returnType: "void",
 		}
 	],
 	category: "buttons",
