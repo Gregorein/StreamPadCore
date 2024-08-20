@@ -1,4 +1,4 @@
-import { createSourceFile, ScriptTarget, isExportAssignment, isTypeAliasDeclaration, Node, forEachChild, isObjectLiteralExpression, TypeLiteralNode, isInterfaceDeclaration, TypeNode, TypeElement, isPropertySignature, isIdentifier, ObjectLiteralElementLike, isPropertyAssignment, createProgram, ObjectLiteralExpression } from "typescript"
+import { createSourceFile, ScriptTarget, isExportAssignment, isTypeAliasDeclaration, Node, forEachChild, isObjectLiteralExpression, TypeLiteralNode, isInterfaceDeclaration, TypeNode, TypeElement, isPropertySignature, isIdentifier, ObjectLiteralElementLike, isPropertyAssignment, createProgram, ObjectLiteralExpression, isVariableDeclaration, isVariableStatement, SyntaxKind } from "typescript"
 import { readFileSync, existsSync, readdirSync, statSync } from "fs"
 import { resolve, basename, join } from "path"
 import { Rule } from "eslint"
@@ -22,6 +22,7 @@ export default {
 				`${controlName}.tsx`,
 				`${controlName}.template.tsx`,
 				`${controlName}.meta.ts`,
+				`${controlName}.test.tsx`
 			]
 
 			requiredFiles.forEach((file) => {
@@ -64,11 +65,16 @@ export default {
 					return
 				}
 
-				if (isExportAssignment(node) && node.isExportEquals === false) {
+				if (isExportAssignment(node)) {
 					hasDefaultExport = true
 				}
 
-				if (isTypeAliasDeclaration(node) && node.name.text === "Props") {
+				if (
+					(
+						isTypeAliasDeclaration(node) ||
+						isInterfaceDeclaration(node)
+					) && node.name.text === "Props"
+				) {
 					hasPropsExport = true
 				}
 
@@ -78,14 +84,20 @@ export default {
 
 			if (!hasDefaultExport) {
 				context.report({
-					node: context.sourceCode.ast,
+					loc: {
+						start: { line: 1, column: 0 },
+						end: { line: 1, column: 1 }
+					},
 					message: `Main file ${basename(componentPath)} must have a default export of a React component.`,
 				})
 			}
 
 			if (!hasPropsExport) {
 				context.report({
-					node: context.sourceCode.ast,
+					loc: {
+						start: { line: 1, column: 0 },
+						end: { line: 1, column: 1 }
+					},
 					message: `Main file ${basename(componentPath)} must export a 'Props' type.`,
 				})
 			}
@@ -107,11 +119,16 @@ export default {
 			const visit = (node: Node) => {
 				// no recursion stop guard because we're checking for lack of Props type export
 
-				if (isExportAssignment(node) && node.isExportEquals === false) {
+				if (isExportAssignment(node)) {
 					hasDefaultExport = true
 				}
 
-				if (isTypeAliasDeclaration(node) && node.name.text === "Props") {
+				if (
+					(
+						isTypeAliasDeclaration(node) ||
+						isInterfaceDeclaration(node)
+					) && node.name.text === "Props"
+				) {
 					hasPropsExport = true
 				}
 
@@ -121,14 +138,20 @@ export default {
 
 			if (!hasDefaultExport) {
 				context.report({
-					node: context.sourceCode.ast,
+					loc: {
+						start: { line: 1, column: 0 },
+						end: { line: 1, column: 1 }
+					},
 					message: `Template file ${basename(templatePath)} must have a default export of a React component.`,
 				})
 			}
 
 			if (hasPropsExport) {
 				context.report({
-					node: context.sourceCode.ast,
+					loc: {
+						start: { line: 1, column: 0 },
+						end: { line: 1, column: 1 }
+					},
 					message: `Template file ${basename(templatePath)} must not export a 'Props' type.`,
 				})
 			}
@@ -144,122 +167,115 @@ export default {
 				true
 			)
 
-			const controlTypeSource = readFileSync(controlTypesPath, "utf8")
-			const controlTypesFile = createSourceFile(
-				controlTypesPath,
-				controlTypeSource,
-				ScriptTarget.Latest,
-				true
-			)
-
 			let hasDefaultExport = false
-			let exportedMeta: ObjectLiteralExpression
+			let exportedMeta: ObjectLiteralExpression | null = null
 
-			const visit = (node: Node) => {
-				// Parse the meta file and check for default export
-				if (isExportAssignment(node) && node.isExportEquals === false) {
-					hasDefaultExport = true
+			const sourceCode = context.sourceCode  // Get the source code in ESTree format
 
-					// Check if exported value is an object literal
-					if (isObjectLiteralExpression(node.expression)) {
-						exportedMeta = node.expression
-					}
+			// Traverse the TypeScript AST to find the default export and the meta object
+			const visitNode = (node: Node) => {
+				if (isVariableStatement(node)) {
+					node.declarationList.declarations.forEach((declaration) => {
+						if (
+							isIdentifier(declaration.name) &&
+							declaration.name.text === "meta" &&
+							isObjectLiteralExpression(declaration.initializer)
+						) {
+							exportedMeta = declaration.initializer
+						}
+					})
 				}
 
-				forEachChild(node, visit)
-			}
-			visit(sourceFile)
+				if (isExportAssignment(node) && isIdentifier(node.expression) && node.expression.text === "meta") {
+					hasDefaultExport = true
+				}
 
+				forEachChild(node, visitNode)
+			}
+
+			visitNode(sourceFile)
+
+			// Report if no default export was found
 			if (!hasDefaultExport) {
 				context.report({
-					node: context.sourceCode.ast,
-					message: `Meta file ${basename(metaPath)} must have a default export of an object literal.`,
+					loc: {
+						start: { line: 1, column: 0 },
+						end: { line: 1, column: 1 }
+					},
+					message: `Meta file ${basename(metaPath)} must have a default export of an object literal with a Meta type`,
 				})
-
 				return
 			}
 
+			// Report if the default export is not a valid meta object
 			if (!exportedMeta) {
 				context.report({
-					node: context.sourceCode.ast,
-					message: `Meta file ${basename(metaPath)} must have a default export of an object literal with a Meta type.`,
+					loc: {
+						start: { line: 1, column: 0 },
+						end: { line: 1, column: 1 }
+					},
+					message: `Meta file ${basename(metaPath)} does not export a valid Meta object`,
 				})
-
 				return
 			}
 
-			// 2. Verify that the meta file is fulfilling the Meta type
-			let metaType: TypeLiteralNode | undefined
-			const findMetaType = (node: Node) => {
-				if (isInterfaceDeclaration(node) && node.name.text === "Meta") {
-					metaType = node.members as unknown as TypeLiteralNode
-				}
+			// Further checks on exportedMeta for specific fields...
+			const requiredFields = [
+				{ key: "name", type: "string" },
+				{ key: "description", type: "string" },
+				{ key: "version", type: "string" },
+				{ key: "author", type: "string" },
+				{ key: "license", type: "string" },
+				{ key: "api", type: "array" },
+				{ key: "category", type: "string" },
+				{ key: "tags", type: "array" },
+			]
 
-				forEachChild(node, findMetaType)
-			}
-			findMetaType(controlTypesFile)
-
-			if (!metaType) {
-				context.report({
-					node: context.sourceCode.ast,
-					message: `Meta file ${basename(metaPath)} must export a Meta type.`,
-				})
-
-				return
-			}
-
-			// 3. Validate fields against the Meta type
-			const metaFields = new Map<string, TypeNode>()
-			metaType.members.forEach((member: TypeElement) => {
-				if (isPropertySignature(member) && isIdentifier(member.name)) {
-					const memberName = member.name.text
-
-					metaFields.set(memberName, member.type!)
-				}
-			})
-
-			const exportedFields = new Map<string, Node>()
 			exportedMeta.properties.forEach((property: ObjectLiteralElementLike) => {
 				if (isPropertyAssignment(property) && isIdentifier(property.name)) {
-					const propName = property.name.text
+					const propName = property.name.escapedText.toString()
 
-					exportedFields.set(propName, property.initializer)
+					const requiredField = requiredFields.find((field) => field.key === propName)
+					if (requiredField) {
+						const initializer = property.initializer
+
+						// Check type matching
+						switch (requiredField.type) {
+							case "string":
+								if (!initializer || initializer.kind !== SyntaxKind.StringLiteral) {
+									const estreeNode = sourceCode.getNodeByRangeIndex(property.name.getStart())
+									context.report({
+										node: estreeNode,  // Report the corresponding ESTree node
+										message: `Field '${propName}' must be of type 'string' in ${basename(metaPath)}`,
+									})
+								}
+								break
+							case "array":
+								if (!initializer || initializer.kind !== SyntaxKind.ArrayLiteralExpression) {
+									const estreeNode = sourceCode.getNodeByRangeIndex(property.name.getStart())
+									context.report({
+										node: estreeNode,  // Report the corresponding ESTree node
+										message: `Field '${propName}' must be an array in ${basename(metaPath)}`,
+									})
+								}
+								break
+							// add more specific checks here for other types, like 'number', etc.
+						}
+					}
 				}
 			})
 
-			// 4. Report missing
-			metaFields.forEach((expectedTypeNode: TypeNode, fieldName: string) => {
-				const node = exportedFields.get(fieldName)
+			// Check for missing fields
+			requiredFields.forEach((field) => {
+				const hasField = exportedMeta!.properties.some((property) => {
+					return isPropertyAssignment(property) && isIdentifier(property.name) && property.name.escapedText === field.key
+				})
 
-				if (!node) {
+				if (!hasField) {
+					const estreeNode = sourceCode.getNodeByRangeIndex(exportedMeta!.getStart())
 					context.report({
-						node: context.sourceCode.ast,
-						message: `Meta field ${fieldName} is missing in ${basename(metaPath)}.`,
-					})
-
-					return
-				}
-
-				// Validate field type
-				const typeChecker = createProgram([metaPath, controlTypesPath], {})
-					.getTypeChecker()
-
-				const actualType = typeChecker.getTypeAtLocation(node)
-				const expectedType = typeChecker.getTypeFromTypeNode(expectedTypeNode)
-				if (!typeChecker.isTypeAssignableTo(actualType, expectedType)) {
-					context.report({
-						node: context.sourceCode.ast,
-						message: `Field '${fieldName}' in the Meta object is of incorrect type. Expected: '${expectedType.getSymbol()!.getName()}', but got: '${actualType.getSymbol()?.getName()}'.`,
-					})
-				}
-			})
-
-			// 5. Report extra fields
-			exportedFields.forEach((_, fieldName: string) => {
-				if (!metaFields.has(fieldName)) {
-					context.report({
-						node: context.sourceCode.ast,
-						message: `Unexpected field '${fieldName}' found in the exported Meta object.`,
+						node: estreeNode,  // Report the corresponding ESTree node
+						message: `Meta object is missing required field '${field.key}' in ${basename(metaPath)}`,
 					})
 				}
 			})
@@ -277,17 +293,17 @@ export default {
 
 					validateFilesExist(controlName, controlPath)
 
-					const componentPath = join(srcPath, `${controlName}.tsx`)
+					const componentPath = join(srcPath, controlName, `${controlName}.tsx`)
 					if (existsSync(componentPath)) {
 						validateComponentFile(componentPath)
 					}
 
-					const templatePath = join(srcPath, `${controlName}.template.tsx`)
+					const templatePath = join(srcPath, controlName, `${controlName}.template.tsx`)
 					if (existsSync(templatePath)) {
 						validateTemplateFile(templatePath)
 					}
 
-					const metaPath = join(srcPath, `${controlName}.meta.ts`)
+					const metaPath = join(srcPath, controlName, `${controlName}.meta.ts`)
 					if (existsSync(metaPath)) {
 						validateMetaFile(metaPath)
 					}
