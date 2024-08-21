@@ -1,6 +1,6 @@
 {
   "name": "streampadcore",
-  "version": "0.0.16",
+  "version": "0.0.17",
   "repository": "git@github.com:Gregorein/StreamPadCore.git",
   "author": {
     "name": "Gregorein",
@@ -14,8 +14,7 @@
     "storybook": "storybook dev -p 6006",
     "storybook:reset": "rimraf node_modules/.cache/storybook",
     "storybook:build": "storybook build",
-    "predeploy": "yarn storybook:build",
-    "deploy": "gh-pages -d storybook-static",
+    "deploy": "yarn storybook:build && gh-pages -d storybook-static",
     "prelint": "tsc -p tsconfig.eslint.json",
     "lint": "yarn prelint && eslint *.{js,ts,tsx}",
     "lint:fix": "yarn lint --fix",
