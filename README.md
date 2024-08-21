@@ -2,28 +2,55 @@
 
 # StreamPadCore
 
-StreamPadCore is a shared UI and utility library for the StreamPad project, providing reusable components and tools across the StreamPad desktop application, web UI customization tool, and companion app.
+StreamPadCore is a shared UI and utility library for the StreamPad project, providing reusable controls and tools across the StreamPad desktop application, web UI customization tool, and companion app.
+
 
 ## Overview
 
-This library includes two main sets of components:
+This library includes a library of controls shipped by default with the StreamPad app.
 
-1. **AppUI**: Common UI components used in the main app, web app, and companion app.
-2. **ControlUI**: Interactive controls for user-configurable interfaces.
+Each control is structured to include the following:
+
+- **Control**: The main React component.
+- **Template**: A simplified or static representation of the control used in the StreamPad EditorUI (in the library/gallery views).
+- **API**: Descriptions of the control's available methods and events.
+- **Metadata**: Information such as version, author, license, and dependencies.
+- **Initialization**: An optional `initialize` function for setup tasks when the control is loaded.
 
 ## Getting Started
 
-To include this library in your project, you can install it directly from the GitHub repository:
+To get started with StreamPad, clone the repository and follow the instructions below:
 
 ```bash
 yarn add git@github.com:Gregorein/StreamPadCore.git
 ```
 
-or with npm:
+then run storybook:
 
 ```bash
-npm install git@github.com:Gregorein/StreamPadCore.git
+yarn storybook
 ```
+
+This will let you preview the controls, their templates and read about usage and customization options.
+
+### Building own controls
+
+To build your own control, start with generating a boilerplate using the following command:
+
+```bash
+yarn generate
+```
+The script will guide you through naming, addid initial description and setting up the control. You'll be able to change all these entries later, but the created files are required for the control to work.
+
+## Roadmap
+
+* Implement update check and download in the StreamPad App.
+* Handle versioning and compatibility.
+* Implement dynamic component loading.
+* Document the process for developing custom controls.
+* Provide example custom controls and test their integration.
+* Set up CI for releases.
+* Engage with the community and iterate based on feedback.
 
 ## License
 

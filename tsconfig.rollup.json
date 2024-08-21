@@ -1,0 +1,13 @@
+{
+  "extends": "./tsconfig.app.json",
+  "compilerOptions": {
+    "noEmit": false, // Override to allow emitting JavaScript
+    "declaration": true, // Emit .d.ts declaration files
+    "declarationDir": "./dist/types", // Specify where to place the declarations
+    "outDir": "./dist", // Specify the output directory for compiled JavaScript
+    "sourceMap": true, // Generate source maps
+    "emitDeclarationOnly": false, // Ensure both JS and declarations are emitted
+    "allowImportingTsExtensions": false // Disable this to avoid conflict with emitting JS
+  },
+  "exclude": ["**/*.test.ts", "**/*.test.tsx", "node_modules"] // Exclude test files from the build
+}
