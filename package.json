@@ -1,6 +1,6 @@
 {
   "name": "streampadcore",
-  "version": "0.1.13",
+  "version": "0.1.14",
   "repository": "git@github.com:Gregorein/StreamPadCore.git",
   "author": {
     "name": "Gregorein",
@@ -23,7 +23,8 @@
     "test:watch": "jest --watch",
     "test:coverage": "jest --coverage --coverageReporters=text",
     "prepare": "husky",
-    "generate": "plop --plopfile scripts/generate-script.js"
+    "generate": "plop --plopfile scripts/generate-script.js",
+    "build": "node scripts/build.js"
   },
   "dependencies": {
     "@fontsource-variable/fira-code": "^5.0.18",
@@ -33,6 +34,10 @@
   },
   "devDependencies": {
     "@eslint/js": "^9.8.0",
+    "@rollup/plugin-commonjs": "^26.0.1",
+    "@rollup/plugin-json": "^6.1.0",
+    "@rollup/plugin-node-resolve": "^15.2.3",
+    "@rollup/plugin-typescript": "^11.1.6",
     "@storybook/addon-docs": "^8.2.9",
     "@storybook/blocks": "^8.2.9",
     "@storybook/builder-vite": "^8.2.9",
@@ -49,6 +54,7 @@
     "@types/react": "^18.3.3",
     "@types/react-dom": "^18.3.0",
     "@vitejs/plugin-react-swc": "^3.7.0",
+    "archiver": "^7.0.1",
     "eslint": "^9.8.0",
     "eslint-plugin-react": "^7.35.0",
     "eslint-plugin-react-hooks": "^5.1.0-rc.0",
@@ -61,6 +67,8 @@
     "lucide-react": "^0.427.0",
     "plop": "^4.0.1",
     "rimraf": "^6.0.1",
+    "rollup": "^4.21.0",
+    "rollup-plugin-typescript2": "^0.36.0",
     "storybook": "^8.2.9",
     "ts-jest": "^29.2.4",
     "ts-node": "^10.9.2",

@@ -37,7 +37,7 @@
     
     "baseUrl": "./src",
     "paths": {    
-      "components/*": ["components/*"],
+      "controls/*": ["controls/*"],
 			"utils/*": ["utils/*"],
 			"types/*": ["types/*"]
     }

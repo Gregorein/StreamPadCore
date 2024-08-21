@@ -1,19 +1,6 @@
-Phase 1: Design the Package Structure
-
-Define Package Contents:
-	Identify the files and directories that will be included in the distributable package.
-	Compiled Components: The JavaScript/CSS files for the UI controls.
-	Metadata File: controls-manifest.json that lists components, version, dependencies, etc.
-	Component Testing: Add unit and integration tests for each component and utility function to ensure stability as new features are added.
-Define controls-manifest.json Schema:
-	Design the JSON schema that will describe the components.
-	Include fields like name, version, dependencies, entry-point, and any configuration options.
-Develop Packaging Script:
-	Write a script to automate the creation of the distributable package from the source code.
-	Ensure the script compiles the components, organizes them into the correct directory structure, and generates the controls-manifest.json.
-
-
 Phase 2: Develop the Update Mechanism
+Implement the compiled package loading:
+	Implement logic to dynamically load the latest package and expose it in the StreamPad app.
 
 Implement Update Check in StreamPad App:
 	Modify the StreamPad App to check for updates on startup.
