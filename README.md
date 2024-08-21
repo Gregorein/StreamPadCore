@@ -2,20 +2,20 @@
 
 # StreamPadCore
 
-StreamPadCore is a shared UI and utility library for the StreamPad project, providing reusable components and tools across the StreamPad desktop application, web UI customization tool, and companion app.
+StreamPadCore is a shared UI and utility library for the StreamPad project, providing reusable controls and tools across the StreamPad desktop application, web UI customization tool, and companion app.
 
 
 ## Overview
 
-This library includes a list of components shipped by default with the StreamPad app.
+This library includes a library of controls shipped by default with the StreamPad app.
 
-Each component is structured to include the following:
+Each control is structured to include the following:
 
-- **Component**: The main React component.
-- **TemplateComponent**: A simplified or static representation of the component used in the StreamPad EditorUI.
-- **API**: Descriptions of the component's available methods and events.
+- **Control**: The main React component.
+- **Template**: A simplified or static representation of the control used in the StreamPad EditorUI (in the library/gallery views).
+- **API**: Descriptions of the control's available methods and events.
 - **Metadata**: Information such as version, author, license, and dependencies.
-- **Initialization**: An optional `initialize` function for setup tasks when the component is loaded.
+- **Initialization**: An optional `initialize` function for setup tasks when the control is loaded.
 
 ## Getting Started
 
@@ -31,21 +31,24 @@ then run storybook:
 yarn storybook
 ```
 
-## Roadmap and Development Phases
+This will let you preview the controls, their templates and read about usage and customization options.
 
-### Phase 1: Design the Package Structure
-* Define package contents and controls-manifest.json schema.
-* Develop packaging scripts.
-### Phase 2: Develop the Update Mechanism
+### Building own controls
+
+To build your own control, start with generating a boilerplate using the following command:
+
+```bash
+yarn generate
+```
+The script will guide you through naming, addid initial description and setting up the control. You'll be able to change all these entries later, but the created files are required for the control to work.
+
+## Roadmap
+
 * Implement update check and download in the StreamPad App.
 * Handle versioning and compatibility.
-### Phase 3: StreamPad App Integration
 * Implement dynamic component loading.
-* Define and implement the component interface for interaction with the app and plugins.
-### Phase 4: Support for Custom Controls
 * Document the process for developing custom controls.
 * Provide example custom controls and test their integration.
-### Phase 5: Finalize and Deploy
 * Set up CI for releases.
 * Engage with the community and iterate based on feedback.
 

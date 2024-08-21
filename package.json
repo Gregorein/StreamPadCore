@@ -1,6 +1,6 @@
 {
   "name": "streampadcore",
-  "version": "0.1.14",
+  "version": "0.1.15",
   "repository": "git@github.com:Gregorein/StreamPadCore.git",
   "author": {
     "name": "Gregorein",
@@ -23,7 +23,7 @@
     "test:watch": "jest --watch",
     "test:coverage": "jest --coverage --coverageReporters=text",
     "prepare": "husky",
-    "generate": "plop --plopfile scripts/generate-script.js",
+    "generate": "plop --plopfile scripts/generate.js",
     "build": "node scripts/build.js"
   },
   "dependencies": {
