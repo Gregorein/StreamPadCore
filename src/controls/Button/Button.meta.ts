@@ -1,4 +1,4 @@
-import { Meta } from "types/Control";
+import { Meta } from "types/Control"
 
 const meta: Meta = {
 	name: "Button",

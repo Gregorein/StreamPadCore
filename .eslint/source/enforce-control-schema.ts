@@ -41,7 +41,7 @@ export default {
 			if (!existsSync(storiesFilePath)) {
 				context.report({
 					node: context.sourceCode.ast,
-					message: `Missing stories file in ${controlPath}. Run: yarn storybook:generate ${controlName}`,
+					message: `Missing stories file in ${controlPath}.`
 				})
 			}
 		}

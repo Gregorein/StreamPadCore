@@ -1,0 +1,13 @@
+import { Meta } from "types/Control"
+
+const meta: Meta = {
+  name: "{{name}}",
+  description: "{{description}}",
+  version: "1.0.0",
+  author: "{{author}}",
+  license: "{{license}}",
+  category: "{{category}}",
+  tags: {{#if tags.length}}[{{#each tags}}"{{this}}",{{/each}}]{{else}}[]{{/if}}
+}
+
+export default meta

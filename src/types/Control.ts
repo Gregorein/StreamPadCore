@@ -1,6 +1,15 @@
 type ValueType = "string" | "number" | "object" | "boolean"
 type Value = string | number | object | boolean
 
+/**
+ * Category represents a group the control belongs to.
+ * 
+ * - `buttons`: Components that emit actions (e.g., buttons, forms).
+ * - `knobs`: Components that control a value in a range.
+ * - `toggles`: Components that control a on/off boolean value.
+ * - `indicators`: Components that display data (e.g., text, images, labels).
+ * - `sliders`: Components that control a value in a range.
+ */
 type Category = "buttons" | "knobs" | "toggles" | "indicators" | "sliders"
 
 /**
@@ -11,11 +20,7 @@ type Category = "buttons" | "knobs" | "toggles" | "indicators" | "sliders"
  * - `basic`: Simple components with minimal functionality.
  * - `advanced`: Components with complicated APIs or behavior.
  */
-type Tag =
-	| "action"
-	| "display"
-	| "basic"
-	| "advanced"
+type Tag = "action" | "display" | "basic" | "advanced"
 
 interface APIFunctionArg {
 	name: string
@@ -51,7 +56,7 @@ export interface Meta {
 	author: string
 	license: string
 
-	api: (APIValue | APIFunction)[]
+	api?: (APIValue | APIFunction)[]
 
 	category: Category
 	tags: Tag[]

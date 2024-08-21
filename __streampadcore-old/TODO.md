@@ -5,8 +5,6 @@ Define Package Contents:
 	Compiled Components: The JavaScript/CSS files for the UI controls.
 	Metadata File: controls-manifest.json that lists components, version, dependencies, etc.
 	Component Testing: Add unit and integration tests for each component and utility function to ensure stability as new features are added.
-Create a Template Package:
-	Draft an example package structure, including a basic UI control, to serve as a reference.
 Define controls-manifest.json Schema:
 	Design the JSON schema that will describe the components.
 	Include fields like name, version, dependencies, entry-point, and any configuration options.
@@ -71,6 +69,3 @@ Community Engagement:
 Monitor and Iterate:
 	After the initial deployment, monitor the feedback and issues.
 	Iterate on the design and implementation as needed, particularly focusing on ease of use and compatibility.
-
-
-Migrate to just MDX
